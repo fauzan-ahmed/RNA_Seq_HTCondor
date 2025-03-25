@@ -1,4 +1,4 @@
-# RNA_Seq_HTCondor
+# RNA Seq HTCondor
 Bulk RNA Seq Workflow Implementation on HTCondor
 
 This repository consists of implementation of standard RNA-seq processing which can be implemented on HTCondor. It consists of submit files, and scripts required to implement the workflow. 
