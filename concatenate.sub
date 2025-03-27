@@ -1,0 +1,41 @@
+#concatenate.sub
+# --------------------------------------------------------------------
+# Specify Container Image
+# --------------------------------------------------------------------
+container_image = file:///....../snakemake_rna_seq.sif
+universe = vanilla
+# --------------------------------------------------------------------
+# Files to transfer to the remote worker node:
+# - fastq.gz directory
+# - Samples text file
+# --------------------------------------------------------------------
+executable = /...../concatenate.sh
+transfer_input_files = samples.txt
+arguments = $(sample)
+
+# --------------------------------------------------------------------
+# Logging and output/error capture
+# --------------------------------------------------------------------
+#arguments = $(Item)
+log    = /...../log_files/concatenate_$(Cluster)_$(Process).log
+error  = /...../log_files/concatenate_$(Cluster)_$(Process).err
+output = /...../log_files/concatenate_$(Cluster)_$(Process).out
+
+# --------------------------------------------------------------------
+# Requirements
+# Using the recommended HTCondor staging requirement. 
+# Adjust if your environment is different.
+# --------------------------------------------------------------------
+requirements = (Target.HasCHTCStaging == True)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# --------------------------------------------------------------------
+# Resource Requests
+# Adjust as needed for your job’s requirements
+# --------------------------------------------------------------------
+request_cpus   = 2
+request_memory = 20GB
+request_disk   = 35GB
+
+queue sample from samples.txt
