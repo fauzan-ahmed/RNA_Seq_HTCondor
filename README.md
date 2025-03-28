@@ -22,4 +22,7 @@ The order of implementation of all the scripts
 
 `concatenate.sub -> fastp.sub -> multiqc.sub -> fastp.sub (optional) -> reference_build.sub (if reference genome does not exist) -> star.sub -> featureCounts.sub -> DESeq2.sub`
 
+DESeq2 and Over-represenation analysis can be conducted locally on RStudio if preferred. Furthermore, https://www.gsea-msigdb.org/gsea/msigdb, https://geneontology.org can also be used for pathway analysis. 
+
+
 You can refer to https://chtc.cs.wisc.edu/uw-research-computing/htcondor-quick-ref for more detailed instructions. 
