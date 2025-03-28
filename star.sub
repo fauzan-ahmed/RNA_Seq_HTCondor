@@ -1,0 +1,41 @@
+#star.sub
+# --------------------------------------------------------------------
+# Use the correct directory for container images.
+# --------------------------------------------------------------------
+container_image = file:///staging/..../rna_seq.sif
+universe = vanilla
+# --------------------------------------------------------------------
+# Files to transfer to the remote worker node:
+# - fastq.gz directory
+# - Samples text file
+# --------------------------------------------------------------------
+executable = star.sh
+transfer_input_files = samples.txt
+arguments = $(samples)
+
+# --------------------------------------------------------------------
+# Logging and output/error capture
+# --------------------------------------------------------------------
+#arguments = $(Item)
+log    = /home/..../log_files/STAR_$(Cluster)_$(Process).log
+error  = /home/..../log_files/STAR_$(Cluster)_$(Process).err
+output = /home/..../log_files/STAR_$(Cluster)_$(Process).out
+
+# --------------------------------------------------------------------
+# Requirements
+# Using the recommended HTCondor staging requirement. 
+# Adjust if your environment is different.
+# --------------------------------------------------------------------
+requirements = (Target.HasCHTCStaging == True)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# --------------------------------------------------------------------
+# Resource Requests
+# Adjust as needed for your job’s requirements
+# --------------------------------------------------------------------
+request_cpus   = 16
+request_memory = 64GB
+request_disk   = 100GB
+
+queue samples from samples.txt
