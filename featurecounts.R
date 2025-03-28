@@ -15,7 +15,8 @@ fc_results <- featureCounts(files = bam_files,
                             isGTFAnnotationFile = TRUE,
                             GTF.featureType = "exon",
                             GTF.attrType = "gene_id",
-                            nthreads = 12)
+                            nthreads = 12,
+                            isPaired = TRUE)
 
 # Write the raw counts to a file for later use
 write.table(fc_results$counts,
