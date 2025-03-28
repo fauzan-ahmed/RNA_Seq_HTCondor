@@ -1,0 +1,13 @@
+#DAGMan Submit
+JOB fastp fastp_normvsep.sub
+JOB fastqc fastqc_normvtrt.sub
+JOB multiqc multiqc.sub
+JOB star star.sub
+JOB featurecounts featureCounts.sub
+JOB deseq2 DESeq2.sub
+
+# Connection
+PARENT fastp CHILD fastqc
+PARENT fastqc CHILD multiqc star
+PARENT star CHILD featurecounts
+PARENT featurecounts CHILD deseq2
