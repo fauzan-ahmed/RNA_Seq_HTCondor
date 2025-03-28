@@ -7,4 +7,8 @@ Definition files required for building Singularity files are also included. One 
 Run `ls *.fastq.gz | cut -d'_' -f1 | sort | uniq > samples.txt` in the command line, preferably in the directory where the fastq files are stored to generalize scripts. 
 
 
+# Implementation
 
+<img width="1065" alt="Screenshot 2025-03-27 at 9 30 00 PM" src="https://github.com/user-attachments/assets/a29ffa1a-5b85-45c1-9eb8-0048e708e24c" />
+
+You can refer to https://chtc.cs.wisc.edu/uw-research-computing/htcondor-quick-ref for basic commands for HTCondor. 
