@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+    # Configure channels explicitly (this avoids ambiguity and deprecation warnings)
+    conda config --add channels defaults
+    conda config --add channels conda-forge
+    conda config --add channels bioconda
+    conda install -n base -c conda-forge mamba
+
+    # Install all required packages using the classic solver to avoid libmamba issues
+    mamba install snakemake salmon fastqc fastp kallisto bioconductor-deseq2 trim-galore subread gseapy bioconductor-fgsea star samtools bedtools umitools multiqc rsem bioconductor-rsubread -y
+
+    # Clean up conda caches to reduce the image size
+    conda clean -afy
