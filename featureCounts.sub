@@ -1,0 +1,39 @@
+#featurecounts.sub
+# --------------------------------------------------------------------
+# Specify directory
+# --------------------------------------------------------------------
+container_image = file:///..../downstream.sif
+universe = vanilla
+# --------------------------------------------------------------------
+# Files to transfer to the remote worker node:
+# - Aligned BAM directory
+# --------------------------------------------------------------------
+executable = /home/...../featurecounts_wrapper.sh
+transfer_input_files = /home/...../U24-Scripts/featcounts.R
+
+# --------------------------------------------------------------------
+# Logging and output/error capture
+# --------------------------------------------------------------------
+#arguments = $(Item)
+log    = /home/..../log_files/featcounts_$(Cluster)_$(Process).log
+error  = /home/..../log_files/featcounts_$(Cluster)_$(Process).err
+output = /home/..../log_files/featcounts_$(Cluster)_$(Process).out
+
+# --------------------------------------------------------------------
+# Requirements
+# Using the recommended HTCondor staging requirement. 
+# Adjust if your environment is different.
+# --------------------------------------------------------------------
+requirements = (Target.HasCHTCStaging == True)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# --------------------------------------------------------------------
+# Resource Requests
+# Adjust as needed for your job’s requirements
+# --------------------------------------------------------------------
+request_cpus   = 16
+request_memory = 200GB
+request_disk   = 250GB
+
+queue
