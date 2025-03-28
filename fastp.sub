@@ -1,0 +1,44 @@
+#fastp.sub
+# --------------------------------------------------------------------
+# Use the correct directory for container images.
+# --------------------------------------------------------------------
+container_image = file:///staging/....../snakemake_rna_seq.sif
+universe = vanilla
+# --------------------------------------------------------------------
+# Files to transfer to the remote worker node:
+# - fastq.gz directory
+# - Samples text file
+#
+# 
+# Replace with your NetID
+# --------------------------------------------------------------------
+executable = /home/...../fastp.sh
+transfer_input_files = samples.txt
+arguments = $(sample)
+
+# --------------------------------------------------------------------
+# Logging and output/error capture
+# --------------------------------------------------------------------
+#arguments = $(Item)
+log    = /home/..../log_files/fastp_$(Cluster)_$(Process).log
+error  = /home/..../log_files/fastp_$(Cluster)_$(Process).err
+output = /home/..../log_files/fastp_$(Cluster)_$(Process).out
+
+# --------------------------------------------------------------------
+# Requirements
+# Using the recommended HTCondor staging requirement. 
+# Adjust if your environment is different.
+# --------------------------------------------------------------------
+requirements = (Target.HasCHTCStaging == True)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# --------------------------------------------------------------------
+# Resource Requests
+# Adjust as needed for your job’s requirements
+# --------------------------------------------------------------------
+request_cpus   = 2
+request_memory = 32GB
+request_disk   = 75GB
+
+queue sample from samples.txt
