@@ -1,10 +1,17 @@
-# RNA Seq HTCondor
-This repository consists of implementation of standard RNA-seq processing which can be implemented on HTCondor. It consists of submit files, and scripts required to implement the workflow. 
+# RNA-Seq Workflow Implementation in HTCondor
+This repository consists of implementation of a basic RNA-seq data processing to identify Differentially Expressed Genes and perform pathway analysis on HTCondor. It consists of submit files, and scripts required to implement the workflow and the defintion file to install the necessary softwares. 
+
+# Author
+Fauzan Ahmed @ fauzan-ahmed
 
 # Environment 
 Definition files required for building Singularity files are also included. One SIF file consisting of required modules is built here. 
 
-Run `ls *.fastq.gz | cut -d'_' -f1 | sort | uniq > samples.txt` in the command line, preferably in the directory where the fastq files are stored to generalize scripts. 
+Prior to implementation, modules needed for analysis need to be installed. Docker images can be pulled from dockerhub by specifying in `container_image = <docker image>`.
+
+Apptainer definition file in rna_seq.def pulls all the required packages/tools from miniconda. To build image `condor_submit rna_seq.def`. In build job, build container through `apptainer build <container name> rna_seq.def`.
+
+Run `ls *.fastq.gz | cut -d'_' -f1 | sort | uniq > samples.txt` in the command line to obtain sample which can be used for generalizing scripts to take full advantage of parallel computing. 
 
 
 # Implementation
@@ -15,4 +22,4 @@ The order of implementation of all the scripts
 
 `concatenate.sub -> fastp.sub -> multiqc.sub -> fastp.sub (optional) -> reference_build.sub (if reference genome does not exist) -> star.sub -> featureCounts.sub -> DESeq2.sub`
 
-You can refer to https://chtc.cs.wisc.edu/uw-research-computing/htcondor-quick-ref for basic commands for HTCondor. 
+You can refer to https://chtc.cs.wisc.edu/uw-research-computing/htcondor-quick-ref for more detailed instructions. 
